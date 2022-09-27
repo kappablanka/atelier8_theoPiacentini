@@ -12,4 +12,11 @@ public class Obstacle {
     public void setPenalite(int penalite) {
         this.penalite = penalite;
     }
+
+    @Override
+    public String toString() {
+        return "Obstacle{" +
+                "penalite=" + penalite +
+                '}';
+    }
 }

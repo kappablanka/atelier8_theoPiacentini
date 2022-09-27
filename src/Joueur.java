@@ -5,7 +5,7 @@ public class Joueur {
     private String code;
     private int nbJoueurs;
     private int nbPoints;
-    ArrayList<Personnage> listePersos;
+    ArrayList<Personnage> listePersos = new ArrayList<>();
 
     /**
      *

@@ -2,17 +2,18 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Jeu {
-    private String titre;
+    private final String  titre;
     private static final int NB_JOUEUR_MAX = 6;
     private static final int  NB_CASES = 50;
-    private int  nbObstaclesMax = 10;
+    private final int nbObstaclesMax;
 
-    private ArrayList<Joueur> listeJoueur;
+    private ArrayList<Joueur> listeJoueur = new ArrayList<>();
     private static int nbEtapes;
     private int nbObstacles;
     private int scoreMax;
-    Case tabCase[] = new Case[NB_CASES];
-    private static Random r = new Random();
+    Case[] tabCase = new Case[NB_CASES];
+    private static final Random r = new Random();
+    private static int nbJoueurs = 0;
 
     public Jeu(String titre, int nbEtapes, int nbObstaclesMax) {
         this.titre = titre;
@@ -22,38 +23,54 @@ public class Jeu {
     }
 
     public void ajouterJoueur(Joueur player) {
-        listeJoueur.add(player);
+        if (nbJoueurs < NB_JOUEUR_MAX){
+            listeJoueur.add(player);
+            nbJoueurs++;
+        }
+        else {
+            System.out.println("nombre maximum de joueurs atteint.");
+        }
+
     }
 
     public ArrayList<Personnage> tousLesPersos() {
-        ArrayList<Personnage> resultat = null;
-        for(int i = 0 ; i < listeJoueur.size() ; i++) {
+        ArrayList<Personnage> resultat = new ArrayList<>();
+        for (Joueur joueur : listeJoueur) {
 
-            for(int j = 0 ; j < listeJoueur.get(i).getListePersos().size() ; j++) {
-                resultat.add(listeJoueur.get(i).getListePersos().get(j));
-            }
+            resultat.addAll(joueur.getListePersos());
         }
         return resultat;
     }
 
     public void initialiserCases() {
         for (int i = 0 ; i < 50 ; i++) {
+            Case caseARentree;
             int nbAleatoire = r.nextInt(1, NB_CASES);
-            tabCase[i].setGain(nbAleatoire);
             if (nbAleatoire % 5 == 0 && nbObstacles < nbObstaclesMax) {
                 Obstacle obs = new Obstacle(nbAleatoire*2);
-                tabCase[i].placerObstacle(obs);
-                nbObstacles += 1;
+                caseARentree = new Case(nbAleatoire, obs);
             }
+            else {
+                caseARentree = new Case(nbAleatoire);
+            }
+            tabCase[i] = caseARentree;
         }
 
 
     }
 
     public void lancerJeu() {
+        initialiserCases();
+        int j = 0;
         for(int i = 0; i < tousLesPersos().size(); i++){
-
+            while(!tabCase[j].sansObstacle()) {
+                j++;
+            }
+            tabCase[j].placerPersonnage(tousLesPersos().get(i));
+            j++;
         }
+
+        afficherCases();
     }
 
     public void afficherCases() {

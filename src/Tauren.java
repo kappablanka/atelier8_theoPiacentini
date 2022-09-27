@@ -18,6 +18,6 @@ public class Tauren extends Personnage{
 
     @Override
     public String toString() {
-        return "Tauren" + nom;
+        return "Tauren " + nom;
     }
 }

@@ -21,6 +21,6 @@ public class Humain extends Personnage {
 
     @Override
     public String toString() {
-        return "Humain" + nom;
+        return "Humain " + nom;
     }
 }
