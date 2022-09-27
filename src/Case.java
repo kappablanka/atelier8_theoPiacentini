@@ -54,7 +54,7 @@ public class Case {
             resultat = "Libre";
         }
         else if (this.sansPerso()) {
-            resultat = obs.toString();
+            return obs.toString();
         }
         else {
             resultat = perso.toString();

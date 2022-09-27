@@ -70,12 +70,19 @@ public class Jeu {
             j++;
         }
 
+
+
+
+
         afficherCases();
+
+
     }
 
     public void afficherCases() {
         for(int i = 0 ; i < NB_CASES ; i++) {
-            System.out.println(tabCase[i].toString());
+
+            System.out.println("Case " + i + " : " + tabCase[i].toString());
         }
     }
 
